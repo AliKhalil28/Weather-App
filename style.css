@@ -205,8 +205,13 @@ input::placeholder {
 }
 
 
-@media(max-width: 400px){
+@media(max-width: 450px){
     .weather__info {
         grid-template-columns: none;
+    }
+
+    .container{
+        margin: 0 auto;
+        border-radius: 0%;
     }
 }
