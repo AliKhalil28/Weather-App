@@ -8,7 +8,7 @@ let datetime = document.querySelector(".weather__datetime");
 let weather__forecast = document.querySelector('.weather__forecast');
 let weather__temperature = document.querySelector(".weather__temperature");
 let weather__icon = document.querySelector(".weather__icon");
-let weather__minmax = document.querySelector(".weather__minmax")
+let sunrise_sunset = document.querySelector(".sunrise_sunset")
 let weather__realfeel = document.querySelector('.weather__realfeel');
 let weather__humidity = document.querySelector('.weather__humidity');
 let weather__wind = document.querySelector('.weather__wind');
@@ -73,6 +73,7 @@ function convertCountryCode(country){
     return regionNames.of(country)
 }
 
+
 function getWeather(){
     const API_KEY = '64f60853740a1ee3ba20d0fb595c97d5'
 
@@ -83,7 +84,19 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${currCity}&appid=${API
     weather__forecast.innerHTML = `<p>${data.weather[0].main}`
     weather__temperature.innerHTML = `${data.main.temp.toFixed()}&#176`
     weather__icon.innerHTML = `   <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png" />`
-    weather__minmax.innerHTML = `<p>Min: ${data.main.temp_min.toFixed()}&#176</p><p>Max: ${data.main.temp_max.toFixed()}&#176</p>`
+    const sunriseTime = new Date(data.sys.sunrise * 1000);
+    const sunsetTime = new Date(data.sys.sunset * 1000);
+
+    const formatTime = (time) => {
+  const hours = time.getHours();
+  const minutes = time.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const formattedHours = hours % 12 || 12; // Convert 0 to 12
+  const formattedMinutes = minutes.toString().padStart(2, '0'); // Add leading zero if needed
+  return `${formattedHours}:${formattedMinutes} ${ampm}`;
+    };
+
+    sunrise_sunset.innerHTML = `<p>Sunrise: ${formatTime(sunriseTime)}</p><p>Sunset: ${formatTime(sunsetTime)}</p>`
     weather__realfeel.innerHTML = `${data.main.feels_like.toFixed()}&#176`
     weather__humidity.innerHTML = `${data.main.humidity}%`
     weather__wind.innerHTML = `${data.wind.speed} ${units === "imperial" ? "mph": "m/s"}` 

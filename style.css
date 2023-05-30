@@ -7,6 +7,43 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body {
+    overflow-X: hidden; /* Hide scrollbars */
+  }
+
+/* nav bar  */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 100;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.navbar-nav a {
+    font-size: 1.2rem;
+}
+
+.nav-logo {
+    width: 50px;
+}
+
+
+.nav-socail {
+    width: 30px;
+    border-radius: 30px;
+    margin-right: 10px;
+}
+
+.nav-socail:hover {
+    transform: scale(1.1);
+}
+
+
+.navbar-collapse {
+    justify-content: end;
+}
+
 .container {
     background: #171717;
     color: #fff;
@@ -116,6 +153,41 @@ input::placeholder {
 
 .weather__card p {
     font-size: 14px;
+}
+
+.contact-img {
+    width: 8vw;
+    border: 1px solid;
+    border-radius: 50%;
+}
+
+/* bottom  */
+.contact-container {
+    background-color: rgb(253, 244, 244);
+    height: 25vh;
+    width: 70vw;
+    border-radius: 24px;
+
+}
+
+.contact-icons a {
+    text-decoration: none;
+    margin: 10px;
+}
+
+.contact-icons a img {
+    width: 30px;
+}
+
+.contact-icons img:hover {
+    transform: scale(1.1);
+}
+/* footer  */
+.footer-logo {
+    width: 45px;
+    border-radius: 10px;
+    margin: 0 5px;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 @media(max-width: 936px){
