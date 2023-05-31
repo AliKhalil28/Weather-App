@@ -84,19 +84,29 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${currCity}&appid=${API
     weather__forecast.innerHTML = `<p>${data.weather[0].main}`
     weather__temperature.innerHTML = `${data.main.temp.toFixed()}&#176`
     weather__icon.innerHTML = `   <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png" />`
-    const sunriseTime = new Date(data.sys.sunrise * 1000);
-    const sunsetTime = new Date(data.sys.sunset * 1000);
+    const sunriseTimestamp = data.sys.sunrise;
+    const sunsetTimestamp = data.sys.sunset;
 
-    const formatTime = (time) => {
-  const hours = time.getHours();
-  const minutes = time.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  const formattedHours = hours % 12 || 12; // Convert 0 to 12
-  const formattedMinutes = minutes.toString().padStart(2, '0'); // Add leading zero if needed
-  return `${formattedHours}:${formattedMinutes} ${ampm}`;
+    // Format the time in the desired format and timezone
+    const formatTime = (timestamp, timezone) => {
+    const convertTimezone = timezone / 3600; // convert seconds to hours
+    const date = new Date(timestamp * 1000);
+
+    const options = {
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: `Etc/GMT${convertTimezone >= 0 ? '-' : '+'}${Math.abs(convertTimezone)}`,
+        hour12: true,
     };
 
-    sunrise_sunset.innerHTML = `<p>Sunrise: ${formatTime(sunriseTime)}</p><p>Sunset: ${formatTime(sunsetTime)}</p>`
+    return date.toLocaleString('en-US', options);
+    };
+
+    // Format the sunrise and sunset times using the selected timezone
+    const sunriseTimeFormatted = formatTime(sunriseTimestamp, data.timezone);
+    const sunsetTimeFormatted = formatTime(sunsetTimestamp, data.timezone);
+
+    sunrise_sunset.innerHTML = `<p>Sun Rise: ${sunriseTimeFormatted}</p><p>Sunset: ${sunsetTimeFormatted}</p>`
     weather__realfeel.innerHTML = `${data.main.feels_like.toFixed()}&#176`
     weather__humidity.innerHTML = `${data.main.humidity}%`
     weather__wind.innerHTML = `${data.wind.speed} ${units === "imperial" ? "mph": "m/s"}` 
